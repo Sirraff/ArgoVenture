@@ -1,0 +1,17 @@
+body.bg-light {
+    background-color: #f8f9fa;
+    color: #212529;
+}
+
+body.bg-dark {
+    background-color: #343a40;
+    color: #f8f9fa;
+}
+
+.navbar.bg-light {
+    background-color: #f8f9fa;
+}
+
+.navbar.bg-dark {
+    background-color: #343a40;
+}

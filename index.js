@@ -1,14 +1,20 @@
 const express = require('express');
+const path = require('path');
 const app = express();
+const PORT = 3000;
 
-app.use(express.json()); // Middleware to parse JSON bodies
+// Set EJS as the view engine
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
-// Define a route to ensure the server is running
+// Serve static files from the public directory
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+    // Render index.ejs with default user info
+    res.render('index', { userName: '', userEmail: '' });
 });
 
-const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+    console.log(`Server running on http://localhost:${PORT}`);
 });
