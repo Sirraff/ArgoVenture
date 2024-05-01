@@ -62,6 +62,8 @@ Contributions to ArgoVenture are welcome. To contribute:
 
 
 Rafael L.S Reis - rafael.ls.reis@gmail.com
+Rayan Hamid - rayanhamid345@gmail.com
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
