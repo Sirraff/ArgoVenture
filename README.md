@@ -59,9 +59,9 @@ Contributions to ArgoVenture are welcome. To contribute:
 6. Create a new Pull Request.
 
 ## Authors
-
-
 Rafael L.S Reis - rafael.ls.reis@gmail.com
+Moe Karaki - momokaraki@gmail.com
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
