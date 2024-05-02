@@ -1,7 +1,7 @@
 {
   "name": "argoventure",
   "version": "1.0.0",
-  "description": "",
+  "description": "ArgoVenture is a web application designed to connect users with a variety of projects and opportunities. It allows users to sign up, log in, and participate in community-driven initiatives.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,7 +13,8 @@
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
-    "firebase": "^10.11.1"
+    "firebase": "^10.11.1",
+    "js": "^0.1.0"
   },
   "devDependencies": {}
 }
