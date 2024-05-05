@@ -32,6 +32,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             userNameSpan.textContent = user.displayName || user.email;
             userNameSpan.style.display = "block";
             addProjectLink.style.display = "block"
+            myProjectLink.style.display = "block"
+            myTeams.style.display = "block"
             // Ensure session is set on the server without reloading the page
             user.getIdToken().then((idToken) => {
                 fetch('/sessionLogin', {
@@ -47,7 +49,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
         } else {
             // User is signed out.
-            addProjectLink.style.display ="none"
+            addProjectLink.style.display = "none"
+            myProjectLink.style.display = "none"
+            myTeams.style.display = "none"
             signInButton.style.display = "block";
             signOutButton.style.display = "none";
             userImage.style.display = "none";

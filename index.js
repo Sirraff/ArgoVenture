@@ -71,6 +71,28 @@ app.get('/add-update-project', (req, res) => {
     }
 });
 
+app.post('/add-project', (req, res) => {
+    if (!req.session || !req.session.user) {
+        // If the user is not logged in, redirect to the login page
+        return res.redirect('/');
+    }
+
+    const { projectName, projectDescription, githubRepo } = req.body;
+    const sql = `INSERT INTO Projects (project_name, project_description, github_repo, creator_id) VALUES (?, ?, ?, ?)`;
+    const values = [projectName, projectDescription, githubRepo || null, req.session.user.uid]; // Handles null if githubRepo is empty
+    
+
+    
+    db.query(sql, values, (error, results) => {
+        if (error) {
+            console.error('Error adding project:', error);
+            return res.status(500).send('Failed to add project');
+        }
+        // Redirect to a confirmation page or back to the project list
+        res.redirect('/'); // TODO makee it reroute to users existing projects
+    });
+});
+
 app.post('/sessionLogin', (req, res) => {
     const idToken = req.body.idToken;
     admin.auth().verifyIdToken(idToken)

@@ -6,12 +6,6 @@
         <p>Discover your next project with ArgoVenture! Join our community and explore diverse projects and opportunities that will spike your interest.</p>
         <p>Whether you're looking to connect with like-minded people or spark new ideas, ArgoVenture is your go-to platform for making it happen!!!</p>
 
-        <% if (authenticated) { %>
-            <div class="container mt-3">
-                <a class="btn btn-primary" href="/add-update-project">Add/Update Project</a>
-            </div>
-        <% } %>
-
         <!-- Project Display Section -->
         <div class="row">
             <% projects.forEach(function(project) { %>
