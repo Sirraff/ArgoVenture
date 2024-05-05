@@ -71,6 +71,70 @@ app.get('/add-update-project', (req, res) => {
     }
 });
 
+app.get('/user-projects', (req, res) => {
+    if (!req.session || !req.session.user) {
+        return res.redirect('/login');
+    }
+
+    const sql = "SELECT * FROM Projects WHERE creator_id = ?";
+    db.query(sql, [req.session.user.uid], (error, projects) => {
+        if (error) {
+            console.error('Error fetching user projects:', error);
+            return res.status(500).send('Failed to retrieve projects');
+        }
+        res.render('user-projects', { projects: projects });
+    });
+});
+
+// Route to fetch project details for editing
+app.get('/projects/edit/:id', (req, res) => {
+    const sql = "SELECT * FROM Projects WHERE project_id = ?";
+    db.query(sql, [req.params.id], (error, results) => {
+        if (error) {
+            return res.status(500).send('Failed to fetch project details');
+        }
+        res.render('edit-project', { project: results[0] });
+    });
+});
+
+// to update the project cards from user
+app.get('/projects/edit/:id', (req, res) => {
+    const sql = "SELECT * FROM Projects WHERE project_id = ?";
+    db.query(sql, [req.params.id], (error, results) => {
+        if (error) {
+            return res.status(500).send('Failed to fetch project details');
+        }
+        if (results.length > 0) {
+            res.render('edit-project', { project: results[0] });
+        } else {
+            res.status(404).send('Project not found');
+        }
+    });
+});
+
+// Route to handle project updates
+app.post('/projects/edit/:id', (req, res) => {
+    const { projectName, projectDescription, participants } = req.body;
+    const sql = "UPDATE Projects SET project_name = ?, project_description = ?, participants = ? WHERE project_id = ?";
+    db.query(sql, [projectName, projectDescription, participants, req.params.id], (error, results) => {
+        if (error) {
+            return res.status(500).send('Failed to update project');
+        }
+        res.redirect('/user-projects');
+    });
+});
+
+// Route to delete a project
+app.delete('/projects/delete/:id', (req, res) => {
+    const sql = "DELETE FROM Projects WHERE project_id = ?";
+    db.query(sql, [req.params.id], (error, results) => {
+        if (error) {
+            return res.json({ success: false, message: 'Failed to delete project' });
+        }
+        res.json({ success: true, message: 'Project deleted successfully' });
+    });
+});
+
 app.post('/add-project', (req, res) => {
     if (!req.session || !req.session.user) {
         // If the user is not logged in, redirect to the login page
