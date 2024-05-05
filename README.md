@@ -19,6 +19,10 @@ To install ArgoVenture, follow these steps:
    ```
    npm install
    npm install express ejs
+   npm install mysql
+   npm install express-session
+   npm install body-parser
+   npm install firebase-admin
    ```
 4. Environment Configuration(TO DO)
    For managing environment-specific settings, such as API keys, install dotenv:
