@@ -1,24 +1,75 @@
+/* Base styles for light mode */
 body.bg-light {
     background-color: #f8f9fa;
     color: #212529;
 }
 
+/* Base styles for dark mode */
 body.bg-dark {
     background-color: #343a40;
     color: #f8f9fa;
 }
 
-/* Default light mode colors */
+/* Default light mode colors for navigation links */
 .navbar-light .navbar-nav .nav-link {
     color: rgba(0,0,0,.55);
 }
 
-/* Dark mode specific colors */
+/* Dark mode specific colors for navigation links */
 body.dark-mode .navbar-light .navbar-nav .nav-link {
-    color: #fff; /* Change to a light color suitable for dark backgrounds */
+    color: #fff; /* Light color suitable for dark backgrounds */
 }
 
-/* You might also need to handle the navbar background if it doesn't already switch */
+/* Handling the navbar background in dark mode */
 body.dark-mode .navbar-light {
     background-color: #343a40; /* Dark background for the navbar */
+}
+
+/* Footer styles */
+.footer {
+    text-align: center;
+}
+
+/* Card styles for light mode */
+.card {
+    background-color: #fff; /* White background for cards in light mode */
+    color: #212529; /* Dark text for readability in light mode */
+}
+
+/* Card footer styles for light mode */
+.card-footer {
+    background-color: #f8f9fa; /* Slightly lighter than card bg */
+}
+
+/* Card styles for dark mode */
+body.dark-mode .card {
+    background-color: #212529; /* Dark background for cards in dark mode */
+    color: #fff; /* White text for readability in dark mode */
+}
+
+/* Card footer styles for dark mode */
+body.dark-mode .card-footer {
+    background-color: #343a40; /* Darker footer for contrast */
+}
+
+/* Ensuring that theme toggle is always visible and appropriately styled */
+#themeToggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+/* Styles for the toggle theme button */
+#toggleTheme {
+    background: #fff;
+    color: #343a40;
+    border: 1px solid #343a40; /* Visible border for contrast */
+}
+
+/* Dark mode toggle button styles */
+body.dark-mode #toggleTheme {
+    background: #343a40;
+    color: #fff;
+    border: 1px solid #fff; /* Adjust border color for visibility in dark mode */
 }
