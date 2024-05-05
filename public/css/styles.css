@@ -1,4 +1,5 @@
 /* Dark mode styles for the footer, increased specificity */
+.footer{text-align: center}
 body.bg-dark .footer, .bg-dark .footer {
     background-color: #343a40; /* Dark background for the footer */
     color: #fff; /* White text for readability in dark mode */
