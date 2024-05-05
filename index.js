@@ -57,6 +57,19 @@ app.get('/', (req, res) => {
         res.render('index', { projects: projects, authenticated: isAuthenticated });
     });
 });
+app.get('/add-update-project', (req, res) => {
+    // Check if the user is authenticated
+    if (req.session && req.session.user) {
+        // If authenticated, render the add-update-project page
+        res.render('add-update-project', {
+            title: 'Add or Update Project',
+            user: req.session.user  // Optional: Pass user details to the view if needed
+        });
+    } else {
+        // If not authenticated, redirect to login page or homepage
+        res.redirect('/login');  // Adjust as necessary to point to your login route or homepage
+    }
+});
 
 app.post('/sessionLogin', (req, res) => {
     const idToken = req.body.idToken;
