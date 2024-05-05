@@ -2,8 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
 
-// Add your own Firebase config here
-// Initialize Firebase
+
 const firebaseConfig = {
     apiKey: "AIzaSyB043DTyD3be6NJma6zuqAFu5ZCZJSOLAQ",
     authDomain: "argoventure-afa36.firebaseapp.com",
@@ -18,46 +17,46 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const provider = new GoogleAuthProvider();
 
-const signInButton = document.getElementById("signInButton");
-const signOutButton = document.getElementById("signOutButton");
-const message = document.getElementById("message");
-const userName = document.getElementById("userName");
-const userEmail = document.getElementById("userEmail");
+document.addEventListener('DOMContentLoaded', function () {
+    const signInButton = document.getElementById("signInButton");
+    const signOutButton = document.getElementById("signOutButton");
+    const message = document.getElementById("message");
+    const userName = document.getElementById("userName");
+    const userEmail = document.getElementById("userEmail");
 
-signOutButton.style.display = "none";
-message.style.display = "none";
-
-const userSignIn = async () => {
-    signInWithPopup(auth, provider)
-    .then((result) => {
-        const user = result.user;
-        console.log(user);
-    }).catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        alert(`Error: ${errorMessage}`);
+    onAuthStateChanged(auth, (user) => {
+        const signInButton = document.getElementById("signInButton");
+        const signOutButton = document.getElementById("signOutButton");
+        const userImage = document.getElementById("userImage"); // Ensure this ID matches the HTML
+        const userNameSpan = document.getElementById("userName"); // This will display the user's name
+    
+        if (user) {
+            signInButton.style.display = "none";
+            signOutButton.style.display = "block";
+            userImage.src = user.photoURL; // Set the image source to the user's photo URL
+            userImage.style.display = "block"; // Make the image visible
+            userNameSpan.textContent = user.displayName || user.email; // Display the user's name
+            document.getElementById("message").style.display = "block"; // Optional: display additional message
+        } else {
+            signInButton.style.display = "block";
+            signOutButton.style.display = "none";
+            userImage.style.display = "none"; // Hide the image when not signed in
+            userNameSpan.textContent = ""; // Clear the user's name
+            document.getElementById("message").style.display = "none"; // Hide the message
+        }
     });
-};
 
-const userSignOut = async () => {
-    signOut(auth).then(() => {
-        alert("You have signed out successfully!");
-    }).catch((error) => {
-        alert("Error signing out");
+    signInButton.addEventListener('click', () => {
+        signInWithPopup(auth, provider).catch((error) => {
+            alert("Error during sign in: " + error.message);
+        });
     });
-};
 
-onAuthStateChanged(auth, (user) => {
-    if (user) {
-        signOutButton.style.display = "block";
-        message.style.display = "block";
-        userName.innerHTML = user.displayName;
-        userEmail.innerHTML = user.email;
-    } else {
-        signOutButton.style.display = "none";
-        message.style.display = "none";
-    }
+    signOutButton.addEventListener('click', () => {
+        signOut(auth).then(() => {
+            alert("Signed out successfully");
+        }).catch((error) => {
+            alert("Error signing out: " + error.message);
+        });
+    });
 });
-
-signInButton.addEventListener('click', userSignIn);
-signOutButton.addEventListener('click', userSignOut);
