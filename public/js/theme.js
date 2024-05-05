@@ -5,5 +5,6 @@ document.getElementById('toggleTheme').addEventListener('click', function() {
     body.classList.toggle('bg-light');
     nav.classList.toggle('bg-dark');
     nav.classList.toggle('bg-light');
+    document.body.classList.toggle('dark-mode');
     this.textContent = body.classList.contains('bg-dark') ? 'Light Mode' : 'Dark Mode';
 });
