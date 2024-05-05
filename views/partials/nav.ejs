@@ -1,0 +1,43 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" href="/">ArgoVenture</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li>
+                    <a id="addProjectLink" class="btn btn-primary" style="display: none;" href="/add-update-project">+ Project</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                </li>
+
+                <li>
+                    <a id="myProjectLink" class="nav-link" style="display: none;" href="/">My Projects</a> 
+                </li>
+
+                <li>
+                    <a id="myTeams" class="nav-link" style="display: none;" href="/">My Teams</a> 
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Features</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/team">Meet the Team</a>
+                </li>    
+                
+            </ul>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item d-flex align-items-center">
+                    <span id="userName" style="margin-right: 10px; display: none;"></span>
+                    <img id="userImage" src="" alt="User Image" style="height: 30px; width: 30px; border-radius: 50%; display: none; margin-right: 10px;">
+                    <button id="signInButton" class="btn btn-sm btn-primary">Sign In</button>
+                    <button id="signOutButton" class="btn btn-sm btn-danger" style="display: none;">Sign Out</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

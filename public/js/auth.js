@@ -2,7 +2,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
 
-
 const firebaseConfig = {
     apiKey: "AIzaSyB043DTyD3be6NJma6zuqAFu5ZCZJSOLAQ",
     authDomain: "argoventure-afa36.firebaseapp.com",
@@ -17,46 +16,61 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const provider = new GoogleAuthProvider();
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', async () => {
     const signInButton = document.getElementById("signInButton");
     const signOutButton = document.getElementById("signOutButton");
-    const message = document.getElementById("message");
-    const userName = document.getElementById("userName");
-    const userEmail = document.getElementById("userEmail");
+    const userImage = document.getElementById("userImage");
+    const userNameSpan = document.getElementById("userName");
 
     onAuthStateChanged(auth, (user) => {
-        const signInButton = document.getElementById("signInButton");
-        const signOutButton = document.getElementById("signOutButton");
-        const userImage = document.getElementById("userImage"); // Ensure this ID matches the HTML
-        const userNameSpan = document.getElementById("userName"); // This will display the user's name
-    
         if (user) {
+            // User is signed in.
             signInButton.style.display = "none";
             signOutButton.style.display = "block";
-            userImage.src = user.photoURL; // Set the image source to the user's photo URL
-            userImage.style.display = "block"; // Make the image visible
-            userNameSpan.textContent = user.displayName || user.email; // Display the user's name
-            document.getElementById("message").style.display = "block"; // Optional: display additional message
+            userImage.src = user.photoURL || 'path_to_default_image'; // Use a default image if none is available.
+            userImage.style.display = "block";
+            userNameSpan.textContent = user.displayName || user.email;
+            userNameSpan.style.display = "block";
+            addProjectLink.style.display = "block"
+            myProjectLink.style.display = "block"
+            myTeams.style.display = "block"
+            // Ensure session is set on the server without reloading the page
+            user.getIdToken().then((idToken) => {
+                fetch('/sessionLogin', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ idToken })
+                }).then(response => response.json())
+                .then(data => {
+                    console.log('Session status:', data.status);
+                });
+            });
         } else {
+            // User is signed out.
+            addProjectLink.style.display = "none"
+            myProjectLink.style.display = "none"
+            myTeams.style.display = "none"
             signInButton.style.display = "block";
             signOutButton.style.display = "none";
-            userImage.style.display = "none"; // Hide the image when not signed in
-            userNameSpan.textContent = ""; // Clear the user's name
-            document.getElementById("message").style.display = "none"; // Hide the message
+            userImage.style.display = "none";
+            userNameSpan.style.display = "none";
         }
     });
 
     signInButton.addEventListener('click', () => {
         signInWithPopup(auth, provider).catch((error) => {
-            alert("Error during sign in: " + error.message);
+            console.error("Sign-in error:", error);
         });
     });
 
     signOutButton.addEventListener('click', () => {
         signOut(auth).then(() => {
-            alert("Signed out successfully");
+            fetch('/logout', { method: 'POST' });
+            console.log("Signed out successfully.");
         }).catch((error) => {
-            alert("Error signing out: " + error.message);
+            console.error("Sign-out error:", error);
         });
     });
 });
