@@ -110,6 +110,16 @@ app.post('/logout', (req, res) => {
     res.redirect('/');
 });
 
+// route for meet the team
+app.get('/team', (req, res) => {
+    res.render('team');
+});
+
+// Features route
+app.get('/features', (req, res) => {
+    res.render('features');
+});
+
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
