@@ -1,58 +1,110 @@
-/* Base styles for light mode */
+.profile-pic {
+    height: 200px; /* Set a fixed height */
+    width: 200px; /* Set a fixed width */
+    object-fit: cover; /* Ensure the aspect ratio is preserved */
+    margin-bottom: 10px; /* Adds space below the image */
+}
+.profile-info {
+    min-height: 110px; /* Ensures there is enough vertical space for two lines of text */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+h3 {
+    margin: 0;
+    font-size: 16px; /* Smaller font size for names */
+    white-space: nowrap; /* Prevents the text from wrapping */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Adds an ellipsis if the text is too long */
+}
+.email {
+    font-size: 14px; /* Smaller font size for email */
+    color: #666; /* Lighter text color for less emphasis */
+}
+
+/* Dark mode styles for the footer, increased specificity */
+.footer{text-align: center}
+body.bg-dark .footer, .bg-dark .footer {
+    background-color: #343a40; /* Dark background for the footer */
+    color: #fff; /* White text for readability in dark mode */
+}
+
+/* Ensure links inside the footer also have appropriate colors in dark mode */
+.bg-dark .footer a {
+    color: #fff; /* Ensuring links are also white in dark mode */
+}
+
+
+/* Inverting colors of the footer image in dark mode */
+body.bg-dark .footer img {
+    filter: invert(90%); /* color inversion */
+}
+
+
+/* Body styles for light mode */
 body.bg-light {
     background-color: #f8f9fa;
     color: #212529;
 }
 
-/* Base styles for dark mode */
+/* Body styles for dark mode */
 body.bg-dark {
     background-color: #343a40;
     color: #f8f9fa;
 }
 
-/* Default light mode colors for navigation links */
-.navbar-light .navbar-nav .nav-link {
-    color: rgba(0,0,0,.55);
-}
-
-/* Dark mode specific colors for navigation links */
-body.dark-mode .navbar-light .navbar-nav .nav-link {
-    color: #fff; /* Light color suitable for dark backgrounds */
-}
-
-/* Handling the navbar background in dark mode */
-body.dark-mode .navbar-light {
+/* Navbar styles to always have a dark background with white text */
+.navbar {
     background-color: #343a40; /* Dark background for the navbar */
+    color: #fff;
 }
 
-/* Footer styles */
-.footer {
-    text-align: center;
+.navbar .navbar-nav .nav-link {
+    color: #fff; /* White text for all nav links */
+}
+
+.navbar .navbar-brand {
+    color: #fff; /* White text for the brand */
+}
+
+.navbar-toggler {
+    border-color: #fff; /* White border for the toggler icon */
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }
 
 /* Card styles for light mode */
 .card {
-    background-color: #fff; /* White background for cards in light mode */
-    color: #212529; /* Dark text for readability in light mode */
+    background-color: #fff;
+    color: #212529;
+}
+
+/* Card styles for dark mode */
+body.bg-dark .card {
+    background-color: #212529;
+    color: #fff;
 }
 
 /* Card footer styles for light mode */
 .card-footer {
-    background-color: #f8f9fa; /* Slightly lighter than card bg */
-}
-
-/* Card styles for dark mode */
-body.dark-mode .card {
-    background-color: #212529; /* Dark background for cards in dark mode */
-    color: #fff; /* White text for readability in dark mode */
+    background-color: #f8f9fa;
 }
 
 /* Card footer styles for dark mode */
-body.dark-mode .card-footer {
-    background-color: #343a40; /* Darker footer for contrast */
+body.bg-dark .card {
+    background-color: #212529; 
+    border: 1px solid grey;
+
+/* Card footer styles for dark mode */
+body.bg-dark .card-footer {
+    background-color: #343a40; 
+    border-top: 1px solid rgb(77, 76, 76); 
 }
 
-/* Ensuring that theme toggle is always visible and appropriately styled */
+/* Theme toggle button styles */
 #themeToggle {
     position: fixed;
     bottom: 20px;
@@ -60,16 +112,8 @@ body.dark-mode .card-footer {
     z-index: 1000;
 }
 
-/* Styles for the toggle theme button */
 #toggleTheme {
-    background: #fff;
-    color: #343a40;
-    border: 1px solid #343a40; /* Visible border for contrast */
-}
-
-/* Dark mode toggle button styles */
-body.dark-mode #toggleTheme {
     background: #343a40;
     color: #fff;
-    border: 1px solid #fff; /* Adjust border color for visibility in dark mode */
+    border: 1px solid #fff;
 }

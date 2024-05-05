@@ -1,77 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lab 1 Team Portfolio:</title>
-<link rel="stylesheet" href="/css/styles.css"> <!-- Link to your custom stylesheet -->
-<%- include("partials/header.ejs") %> <!-- Assuming this includes Bootstrap CSS -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lab 1 Team Portfolio:</title>
+    <%- include("partials/header.ejs") %> <!-- Ensure Bootstrap CSS is included -->
 </head>
 <body class="bg-light">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-            <a class="navbar-brand" href="#">ArgoVenture</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Features</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/team">Meet the Team</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item d-flex align-items-center">
-                        <img id="userImage" src="" alt="User Image" style="height: 30px; width: 30px; border-radius: 50%; display: none; margin-right: 10px;">
-                        <span id="userName" style="margin-right: 10px; display: none;"></span>
-                        <button id="signInButton" class="btn btn-sm btn-primary">Sign In/Sign Up</button>
-                        <button id="signOutButton" class="btn btn-sm btn-danger" style="display: none;">Sign Out</button>
-                    </li>
-                </ul>
+    <%- include("partials/nav.ejs") %>
+    <div class="container mt-5">
+        <h1 class="mb-4">Team 13</h1>
+        <div class="row text-center">
+            <div class="col-md-3 mb-3">
+                <img src="/img/raf.jpg" alt="Picture of Rafael" class="img-fluid rounded-circle profile-pic">
+                <div class="profile-info">
+                    <h3>Rafael Reis</h3>
+                    <p class="email">rlimadesouzareis@csumb.edu</p>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <img src="/img/moe.jpg" alt="Picture of Moe" class="img-fluid rounded-circle profile-pic">
+                <div class="profile-info">
+                    <h3>Mohamed Karaki</h3>
+                    <p class="email">mkaraki@csumb.edu</p>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <img src="/img/rayanhamid.jpg" alt="Picture of Rayan" class="img-fluid rounded-circle profile-pic">
+                <div class="profile-info">
+                    <h3>Rayan Hamid</h3>
+                    <p class="email">rayhamid@csumb.edu</p>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <img src="/img/michael.jpg" alt="Picture of Michael" class="img-fluid rounded-circle profile-pic">
+                <div class="profile-info">
+                    <h3>Michael Garcia</h3>
+                    <p class="email">michagarcia@csumb.edu</p>
+                </div>
             </div>
         </div>
-    </nav>
-<div class="container mt-5">
-    <h1 class="mb-4">Team 13</h1>
-    <div class="row text-center">
-    <!-- Team member entries -->
-    <div class="col-md-3 mb-3">
-        <img src="/img/raf.jpg" alt="Picture of Rafael" class="img-fluid rounded-circle">
-        <h3>Rafael Reis</h3>
+        <p class="lead">
+            Hello! Thank you for visiting our website. We are a team of internet programmers with a goal to make managing your projects easier, all through ArgoVenture! Feel free to contact us for any questions or concerns, your feedback means a lot to us.
+        </p>
     </div>
-    <div class="col-md-3 mb-3">
-        <img src="/img/moe.jpg" alt="Picture of Moe" class="img-fluid rounded-circle">
-        <h3>Moe Karaki</h3>
-    </div>
-    <div class="col-md-3 mb-3">
-        <img src="/img/rayanhamid.jpg" alt="Picture of Rayan" class="img-fluid rounded-circle">
-        <h3>Rayan</h3>
-    </div>
-    <div class="col-md-3 mb-3">
-        <img src="/img/michael.jpg" alt="Picture of Michael" class="img-fluid rounded-circle">
-        <h3>Michael</h3>
-    </div>
-    </div>
-    <p class="lead">
-    Hello! Thank you for visiting our website. We are a team of internet programmers working on a lab assignment. Please feel free to contact us!
-    </p>
-    <blockquote class="blockquote mb-4">
-    <p class="mb-0">"With great power comes great possibility"</p>
-    <footer class="blockquote-footer">Benjamin Franklin</footer>
-    </blockquote>
-</div>
 
-
-    <%- include("partials/footer.ejs") %> 
-
-
-<script src="/js/theme.js"></script> <!-- Theme switch script -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <footer class="container mt-4">
+        <%- include("partials/footer.ejs") %>
+    </footer>
+    <div id="themeToggle" style="position: fixed; bottom: 20px; right: 20px;">
+        <button class="btn btn-sm btn-outline-secondary" id="toggleTheme">Dark Mode</button>
+    </div>
+    <script src="/js/auth.js" type="module"></script>
+    <script src="/js/theme.js"></script>
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
