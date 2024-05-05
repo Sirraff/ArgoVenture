@@ -19,8 +19,15 @@
     </form>
 </div>
 
-<%- include("partials/footer.ejs") %>
-<script src="/js/theme.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Toggle Theme Button placed at the bottom-right of the page -->
+    <div id="themeToggle" style="position: fixed; bottom: 20px; right: 20px;">
+        <button class="btn btn-sm btn-outline-secondary" id="toggleTheme">Dark Mode</button>
+    </div>
+    
+    <!-- Scripts -->
+    <script type="module" src="/js/auth.js"></script>
+    <script src="/js/theme.js"></script>
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
