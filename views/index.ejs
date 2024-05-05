@@ -7,7 +7,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav me-auto"> <!-- Changed from ms-auto to me-auto -->
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#">Home</a>
                     </li>
@@ -17,18 +17,19 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">Meet the Team</a>
                     </li>
-                    
-                    <li class="nav-item">
+                </ul>
+                <ul class="navbar-nav ms-auto"> <!-- New ul for right aligned items -->
+                    <li class="nav-item d-flex align-items-center">
+                        <img id="userImage" src="" alt="User Image" style="height: 30px; width: 30px; border-radius: 50%; display: none; margin-right: 10px;">
+                        <span id="userName" style="margin-right: 10px; display: none;"></span>
                         <button id="signInButton" class="btn btn-sm btn-primary">Sign In/Sign Up</button>
                         <button id="signOutButton" class="btn btn-sm btn-danger" style="display: none;">Sign Out</button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="btn btn-sm btn-outline-secondary" id="toggleTheme">Dark Mode</button>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
+    
 
     <div class="container mt-5">
         <h1>Welcome to ArgoVenture!</h1>
@@ -36,10 +37,12 @@
         <p>Whether you're looking to connect with like-minded people or spark new ideas, ArgoVenture is your go-to platform for making it happen!!!</p>
     </div>
 
-    <div id="message" class="container" style="display: none;">
-        <p>You have signed in as <span id="userName"></span> with the email <span id="userEmail"></span></p>
+    <!-- Toggle Theme Button placed at the bottom-right of the page -->
+    <div id="themeToggle" style="position: fixed; bottom: 20px; right: 20px;">
+        <button class="btn btn-sm btn-outline-secondary" id="toggleTheme">Dark Mode</button>
     </div>
 
+    <!-- Scripts -->
     <script type="module" src="/js/auth.js"></script>
     <script src="/js/theme.js"></script>
     <!-- Bootstrap JS Bundle with Popper -->
