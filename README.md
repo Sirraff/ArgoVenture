@@ -64,12 +64,10 @@ Contributions to ArgoVenture are welcome. To contribute:
 
 ## Authors
 Rafael L.S Reis - rafael.ls.reis@gmail.com
-<<<<<<< HEAD
+
 Rayan Hamid - rayanhamid345@gmail.com
-=======
 
 Moe Karaki - momokaraki@gmail.com
->>>>>>> bb4358523ceeb82824fba30ac64972aa47d2d8f5
 
 ## License
 
