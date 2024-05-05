@@ -1,39 +1,16 @@
 <%- include("partials/header.ejs") %>
 <body class="bg-light">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-            <a class="navbar-brand" href="#">ArgoVenture</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Features</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Meet the Team</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item d-flex align-items-center">
-                        <img id="userImage" src="" alt="User Image" style="height: 30px; width: 30px; border-radius: 50%; display: none; margin-right: 10px;">
-                        <span id="userName" style="margin-right: 10px; display: none;"></span>
-                        <button id="signInButton" class="btn btn-sm btn-primary">Sign In/Sign Up</button>
-                        <button id="signOutButton" class="btn btn-sm btn-danger" style="display: none;">Sign Out</button>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
+    <%- include("partials/nav.ejs") %>
     <div class="container mt-5">
         <h1>Welcome to ArgoVenture!</h1>
         <p>Discover your next project with ArgoVenture! Join our community and explore diverse projects and opportunities that will spike your interest.</p>
         <p>Whether you're looking to connect with like-minded people or spark new ideas, ArgoVenture is your go-to platform for making it happen!!!</p>
+
+        <% if (authenticated) { %>
+            <div class="container mt-3">
+                <a class="btn btn-primary" href="/add-update-project">Add/Update Project</a>
+            </div>
+        <% } %>
 
         <!-- Project Display Section -->
         <div class="row">
@@ -68,9 +45,6 @@
     <script src="/js/theme.js"></script>
     <!-- Bootstrap JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-
-
     <%- include("partials/footer.ejs") %>
-  
 </body>
 </html>
