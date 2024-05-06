@@ -184,6 +184,28 @@ app.get('/features', (req, res) => {
     res.render('features');
 });
 
+// Feedback page route
+app.get('/feedback', (req, res) => {
+    res.render('feedback');  
+});
+
+app.post('/submit-feedback', (req, res) => {
+    const { satisfaction, comments } = req.body;
+    
+    let sql = 'INSERT INTO Feedback (satisfaction, comments) VALUES (?, ?)';
+    db.query(sql, [satisfaction, comments], (err, result) => {
+        if (err) {
+            console.error('Error saving feedback:', err);
+            res.send('<script>alert("Error submitting feedback. Please try again later."); window.location.href="/feedback";</script>');
+            return;
+        }
+        res.send('<script>alert("Thank you for your feedback!"); window.location.href="/";</script>');
+    });
+});
+
+
+
+
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
