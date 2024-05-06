@@ -1,3 +1,24 @@
+.filter-form {
+    background-color: #f8f9fa; /* Light gray background */
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* subtle shadow for depth */
+    margin-bottom: 20px;
+}
+
+.filter-form select, .filter-form .form-check-input, .filter-form .form-check-label {
+    margin-right: 10px;
+}
+
+.filter-form .btn-primary {
+    background-color: #0056b3; /* Darker blue for the button */
+    border: none;
+}
+
+.filter-form .form-check {
+    display: inline-block;
+}
+
 .like-button.liked {
     color: #fff; 
     background-color: #52ad6e; /* Bootstrap primary blue */

@@ -1,10 +1,49 @@
 <%- include("partials/header.ejs") %>
+<link rel="stylesheet" href="/css/styles.css">
 <body class="bg-light">
     <%- include("partials/nav.ejs") %>
     <div class="container mt-5">
         <h1>Welcome to ArgoVenture!</h1>
         <p>Discover your next project with ArgoVenture! Join our community and explore diverse projects and opportunities that will spike your interest.</p>
         <p>Whether you're looking to connect with like-minded people or spark new ideas, ArgoVenture is your go-to platform for making it happen!!!</p>
+
+        <!-- Filters -->
+        <form id="filters" action="/" method="get" class="mb-3">
+            <div class="row g-3 align-items-center">
+                <div class="col-md-3">
+                    <label class="form-label">Category:</label>
+                    <select class="form-select" name="category">
+                        <option value="">All Categories</option>
+                        <% categories.forEach(function(category) { %>
+                            <option value="<%= category.category_name %>" <%= (category.category_name === selectedCategory ? 'selected' : '') %>><%= category.category_name %></option>
+                        <% }); %>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Sort By:</label>
+                    <select class="form-select" name="sort">
+                        <option value="likes" <%= (sort === 'likes' ? 'selected' : '') %>>Likes</option>
+                        <option value="project_name" <%= (sort === 'project_name' ? 'selected' : '') %>>Project Name</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Order:</label>
+                    <div class="d-flex">
+                        <div class="form-check me-2">
+                            <input class="form-check-input" type="radio" name="order" value="ASC" <%= (order === 'ASC' ? 'checked' : '') %>>
+                            <label class="form-check-label">Ascending</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="order" value="DESC" <%= (order === 'DESC' ? 'checked' : '') %>>
+                            <label class="form-check-label">Descending</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary mt-4">Apply Filters</button>
+                </div>
+            </div>
+        </form>
 
         <!-- Project Display Section -->
         <div class="row">
@@ -14,6 +53,7 @@
                         <div class="card-body">
                             <h5 class="card-title"><%= project.project_name %></h5>
                             <p class="card-text"><%= project.project_description %></p>
+                            <p class="card-text">Category: <%= project.category_name %></p>
                             <button class="btn btn-info like-button" data-project-id="<%= project.project_id %>" data-liked="<%= project.userLiked ? 'true' : 'false' %>">
                                 Like <span><%= project.likes %></span>
                             </button>
