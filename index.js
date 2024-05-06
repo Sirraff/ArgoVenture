@@ -112,6 +112,45 @@ app.get('/projects/edit/:id', (req, res) => {
     });
 });
 
+app.post('/toggle-like/:projectId', (req, res) => {
+    if (!req.session.user) {
+        return res.status(401).json({ success: false, message: 'You must be logged in to like projects.' });
+    }
+    const projectId = req.params.projectId;
+    const userId = req.session.user.uid;
+
+    const likeCheckSql = "SELECT * FROM Likes WHERE project_id = ? AND user_id = ?";
+    db.query(likeCheckSql, [projectId, userId], (error, results) => {
+        if (error) {
+            console.error('Error checking likes:', error);
+            return res.status(500).json({ success: false, message: 'Failed to process like.' });
+        }
+
+        if (results.length > 0) {
+            const deleteLikeSql = "DELETE FROM Likes WHERE project_id = ? AND user_id = ?";
+            db.query(deleteLikeSql, [projectId, userId], (error) => {
+                if (error) {
+                    console.error('Error deleting like:', error);
+                    return res.status(500).json({ success: false, message: 'Failed to unlike the project.' });
+                }
+                res.json({ success: true, liked: false });
+            });
+        } else {
+            const insertLikeSql = "INSERT INTO Likes (project_id, user_id) VALUES (?, ?)";
+            db.query(insertLikeSql, [projectId, userId], (error) => {
+                if (error) {
+                    console.error('Error inserting like:', error);
+                    return res.status(500).json({ success: false, message: 'Failed to like the project.' });
+                }
+                res.json({ success: true, liked: true });
+            });
+        }
+    });
+});
+
+
+
+
 // Route to handle project updates
 app.post('/projects/edit/:id', (req, res) => {
     const { projectName, projectDescription, participants } = req.body;
@@ -161,13 +200,43 @@ app.post('/sessionLogin', (req, res) => {
     const idToken = req.body.idToken;
     admin.auth().verifyIdToken(idToken)
         .then((decodedIdToken) => {
-            req.session.user = decodedIdToken;
-            res.json({ status: 'success' });
+            const userId = decodedIdToken.uid;
+            const userName = decodedIdToken.name || "No name provided";
+
+            // Fetch or create a user in the Users table
+            const userCheckSql = "SELECT user_id FROM Users WHERE google_id = ?";
+            db.query(userCheckSql, [userId], (err, results) => {
+                if (err) {
+                    console.error('Database error on user check:', err);
+                    return res.status(500).json({ error: 'Internal server error' });
+                }
+
+                if (results.length === 0) {
+                    // No user found, insert new user
+                    const insertUserSql = "INSERT INTO Users (name, google_id) VALUES (?, ?)";
+                    db.query(insertUserSql, [userName, userId], (err, insertResult) => {
+                        if (err) {
+                            console.error('Error adding user:', err);
+                            return res.status(500).json({ error: 'Failed to create user' });
+                        }
+                        const newUser = insertResult.insertId;
+                        req.session.user = { uid: newUser, name: userName };
+                        res.json({ status: 'success', message: 'User added and session established.' });
+                    });
+                } else {
+                    // User exists, set the session
+                    const existingUser = results[0].user_id;
+                    req.session.user = { uid: existingUser, name: userName };
+                    res.json({ status: 'success', message: 'Session established.' });
+                }
+            });
         }).catch((error) => {
             console.error('Failed to verify ID token:', error);
-            res.status(401).json({ status: 'failure' });
+            res.status(401).json({ status: 'failure', message: 'Authentication failed.' });
         });
 });
+
+
 
 app.post('/logout', (req, res) => {
     req.session.destroy();
