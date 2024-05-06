@@ -58,22 +58,28 @@ app.get('/', (req, res) => {
     });
 });
 app.get('/add-update-project', (req, res) => {
-    // Check if the user is authenticated
-    if (req.session && req.session.user) {
-        // If authenticated, render the add-update-project page
+    if (!req.session || !req.session.user) {
+        return res.redirect('/login');
+    }
+
+    // Fetch categories to fill the dropdown
+    const sql = "SELECT category_id, category_name FROM Categories";
+    db.query(sql, (error, categories) => {
+        if (error) {
+            console.error('Error fetching categories:', error);
+            return res.status(500).send('Error fetching categories');
+        }
         res.render('add-update-project', {
             title: 'Add or Update Project',
-            user: req.session.user  // Optional: Pass user details to the view if needed
+            user: req.session.user, // Optional: Pass user details to the view if needed
+            categories: categories // Pass categories to the view for the dropdown
         });
-    } else {
-        // If not authenticated, redirect to login page or homepage
-        res.redirect('/login');  // Adjust as necessary to point to your login route or homepage
-    }
+    });
 });
 
 app.get('/user-projects', (req, res) => {
     if (!req.session || !req.session.user) {
-        return res.redirect('/login');
+        return res.redirect('/');
     }
 
     const sql = "SELECT * FROM Projects WHERE creator_id = ?";
@@ -109,6 +115,24 @@ app.get('/projects/edit/:id', (req, res) => {
         } else {
             res.status(404).send('Project not found');
         }
+    });
+});
+
+app.post('/add-project', (req, res) => {
+    if (!req.session || !req.session.user) {
+        return res.redirect('/');
+    }
+
+    const { projectName, projectDescription, githubRepo, projectCategory } = req.body;
+    const sql = "INSERT INTO Projects (project_name, project_description, github_repo, category_id, creator_id) VALUES (?, ?, ?, ?, ?)";
+    const values = [projectName, projectDescription, githubRepo || null, projectCategory, req.session.user.uid];
+
+    db.query(sql, values, (error, results) => {
+        if (error) {
+            console.error('Error adding project:', error);
+            return res.status(500).send('Failed to add project');
+        }
+        res.redirect('/user-projects'); // Redirect to the user's projects page
     });
 });
 
@@ -174,25 +198,22 @@ app.delete('/projects/delete/:id', (req, res) => {
 
 app.post('/add-project', (req, res) => {
     if (!req.session || !req.session.user) {
-        // If the user is not logged in, redirect to the login page
         return res.redirect('/');
     }
 
-    const { projectName, projectDescription, githubRepo } = req.body;
-    const sql = `INSERT INTO Projects (project_name, project_description, github_repo, creator_id) VALUES (?, ?, ?, ?)`;
-    const values = [projectName, projectDescription, githubRepo || null, req.session.user.uid]; // Handles null if githubRepo is empty
-    
+    const { projectName, projectDescription, githubRepo, projectCategory } = req.body;
+    const sql = `INSERT INTO Projects (project_name, project_description, github_repo, category, creator_id) VALUES (?, ?, ?, ?, ?)`;
+    const values = [projectName, projectDescription, githubRepo || null, projectCategory, req.session.user.uid];
 
-    
     db.query(sql, values, (error, results) => {
         if (error) {
             console.error('Error adding project:', error);
             return res.status(500).send('Failed to add project');
         }
-        // Redirect to a confirmation page or back to the project list
-        res.redirect('/'); // TODO makee it reroute to users existing projects
+        res.redirect('/'); // Redirect to the project list or confirmation page
     });
 });
+    
 
 app.post('/sessionLogin', (req, res) => {
     const idToken = req.body.idToken;
