@@ -1,3 +1,8 @@
+.like-button.liked {
+    color: #fff; 
+    background-color: #52ad6e; /* Bootstrap primary blue */
+}
+
 .profile-pic {
     height: 200px; /* Set a fixed height */
     width: 200px; /* Set a fixed width */
