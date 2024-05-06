@@ -73,17 +73,18 @@ app.get('/', (req, res) => {
                 return res.status(500).send('Error fetching projects');
             }
             const isAuthenticated = req.session.user !== undefined;
-            // Pass all needed data to the view
             res.render('index', {
                 projects,
                 categories,
                 selectedCategory,
-                query: req.query, // Pass the query parameters to the EJS
+                sort: req.query.sort,
+                order: req.query.order,
                 isAuthenticated
             });
         });
     });
 });
+
 
 
 
