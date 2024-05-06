@@ -6,6 +6,35 @@
         <p>Discover your next project with ArgoVenture! Join our community and explore diverse projects and opportunities that will spike your interest.</p>
         <p>Whether you're looking to connect with like-minded people or spark new ideas, ArgoVenture is your go-to platform for making it happen!!!</p>
 
+        <!-- Filters -->
+        <form id="filters" action="/" method="get">
+            <div class="row mb-3">
+                <div class="col">
+                    <select class="form-control" name="category">
+                        <option value="">All Categories</option>
+                        <% categories.forEach(function(category) { %>
+                            <option value="<%= category.category_name %>" <%= (category.category_name === selectedCategory ? 'selected' : '') %>><%= category.category_name %></option>
+                        <% }); %>
+                    </select>
+                </div>
+                <div class="col">
+                    <select class="form-control" name="sort">
+                        <option value="likes" <%= (query.sort === 'likes' ? 'selected' : '') %>>Likes</option>
+                        <option value="project_name" <%= (query.sort === 'project_name' ? 'selected' : '') %>>Project Name</option>
+                    </select>
+                    <select class="form-control" name="order">
+                        <option value="DESC" <%= (query.order === 'DESC' ? 'selected' : '') %>>Descending</option>
+                        <option value="ASC" <%= (query.order === 'ASC' ? 'selected' : '') %>>Ascending</option>
+                    </select>
+                    
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-primary">Apply Filters</button>
+                </div>
+            </div>
+        </form>
+        
+
         <!-- Project Display Section -->
         <div class="row">
             <% projects.forEach(function(project) { %>
@@ -14,6 +43,7 @@
                         <div class="card-body">
                             <h5 class="card-title"><%= project.project_name %></h5>
                             <p class="card-text"><%= project.project_description %></p>
+                            <p class="card-text">Category: <%= project.category_name %></p>
                             <button class="btn btn-info like-button" data-project-id="<%= project.project_id %>" data-liked="<%= project.userLiked ? 'true' : 'false' %>">
                                 Like <span><%= project.likes %></span>
                             </button>

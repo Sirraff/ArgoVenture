@@ -42,21 +42,53 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 app.get('/', (req, res) => {
-    const sql = `
-        SELECT project_id, project_name, project_description, likes
-        FROM Projects
-        ORDER BY likes DESC
-        LIMIT 10;
+    const selectedCategory = req.query.category || "";
+    const sortOrder = req.query.sort || 'likes';
+    const orderDirection = req.query.order || 'DESC';
+    const limit = req.query.limit || 10;
+
+    let sql = `
+        SELECT p.project_id, p.project_name, p.project_description, p.likes, c.category_name
+        FROM Projects p
+        LEFT JOIN Categories c ON p.category_id = c.category_id
     `;
-    db.query(sql, (error, projects) => {
+
+    if (selectedCategory) {
+        sql += ` WHERE c.category_name = '${selectedCategory}'`;
+    }
+
+    sql += ` ORDER BY p.${mysql.escapeId(sortOrder)} ${orderDirection} LIMIT ${parseInt(limit)}`;
+
+    const fetchCategories = "SELECT category_id, category_name FROM Categories;";
+
+    db.query(fetchCategories, (error, categories) => {
         if (error) {
-            console.error('Error fetching projects:', error);
-            return res.status(500).send('Error fetching projects');
+            console.error('Error fetching categories:', error);
+            return res.status(500).send('Error fetching categories');
         }
-        const isAuthenticated = req.session.user !== undefined;
-        res.render('index', { projects: projects, authenticated: isAuthenticated });
+
+        db.query(sql, (error, projects) => {
+            if (error) {
+                console.error('Error fetching projects:', error);
+                return res.status(500).send('Error fetching projects');
+            }
+            const isAuthenticated = req.session.user !== undefined;
+            // Pass all needed data to the view
+            res.render('index', {
+                projects,
+                categories,
+                selectedCategory,
+                query: req.query, // Pass the query parameters to the EJS
+                isAuthenticated
+            });
+        });
     });
 });
+
+
+
+
+
 app.get('/add-update-project', (req, res) => {
     if (!req.session || !req.session.user) {
         return res.redirect('/login');
