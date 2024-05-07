@@ -45,7 +45,7 @@ app.get('/', (req, res) => {
     const selectedCategory = req.query.category || "";
     const sortOrder = req.query.sort || 'likes';
     const orderDirection = req.query.order || 'DESC';
-    const limit = req.query.limit || 10;
+    const limit = req.query.limit || 25;
 
     let sql = `
         SELECT p.project_id, p.project_name, p.project_description, p.likes, c.category_name
