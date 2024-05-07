@@ -4,7 +4,7 @@
   "description": "ArgoVenture is a web application designed to connect users with a variety of projects and opportunities. It allows users to sign up, log in, and participate in community-driven initiatives.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
