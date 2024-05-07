@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const admin = require('firebase-admin');
 const path = require('path');
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Firebase admin initialization
 const serviceAccount = require('./config/argoventure-afa36-firebase-adminsdk-5o0ok-45ac3f7f3d.json');
@@ -326,5 +326,5 @@ app.post('/submit-feedback', (req, res) => {
 
 
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
