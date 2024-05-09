@@ -6,6 +6,7 @@ const admin = require('firebase-admin');
 const path = require('path');
 const app = express();
 const PORT = 3000;
+const axios = require('axios');
 
 // Firebase admin initialization
 const serviceAccount = require('./config/argoventure-afa36-firebase-adminsdk-5o0ok-45ac3f7f3d.json');
@@ -41,11 +42,11 @@ const db = dbConnection();
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
     const selectedCategory = req.query.category || "";
     const sortOrder = req.query.sort || 'likes';
     const orderDirection = req.query.order || 'DESC';
-    const limit = req.query.limit || 10;
+    const limit = req.query.limit || 25;
 
     let sql = `
         SELECT p.project_id, p.project_name, p.project_description, p.likes, c.category_name
@@ -60,6 +61,9 @@ app.get('/', (req, res) => {
     sql += ` ORDER BY p.${mysql.escapeId(sortOrder)} ${orderDirection} LIMIT ${parseInt(limit)}`;
 
     const fetchCategories = "SELECT category_id, category_name FROM Categories;";
+
+    // Fetch tech news
+    const techNews = await fetchTechNews(); 
 
     db.query(fetchCategories, (error, categories) => {
         if (error) {
@@ -79,7 +83,8 @@ app.get('/', (req, res) => {
                 selectedCategory,
                 sort: req.query.sort,
                 order: req.query.order,
-                isAuthenticated
+                isAuthenticated,
+                techNews  
             });
         });
     });
@@ -323,6 +328,21 @@ app.post('/submit-feedback', (req, res) => {
 });
 
 
+async function fetchTechNews() {
+    try {
+        const response = await axios.get('https://newsapi.org/v2/top-headlines', {
+            params: {
+                category: 'technology',
+                language: 'en',
+                apiKey: 'f4dd026af0614b678a763a7d2cacd930'
+            }
+        });
+        return response.data.articles; // This will return the list of articles
+    } catch (error) {
+        console.error('Failed to fetch tech news:', error);
+        return [];
+    }
+}
 
 
 app.listen(PORT, () => {
